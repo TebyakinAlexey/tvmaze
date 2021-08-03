@@ -1,25 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useReducer, useEffect } from 'react';
+import { AppReducer, initState } from './reducer'
+import { AppReducerContext } from './hooks/useAppReducer'
+import { initPage, LoadPages } from './actions'
+import ListView from './Components/ListView/ListView'
+import PageControl from './Components/PageControl/PageControl'
+import Search from './Components/Search/Search';
+import styles from './App.module.css'
 
 function App() {
+  const reducer = useReducer(AppReducer, initState());
+  const [state, dispatch] = reducer;
+
+  useEffect( () => {
+    dispatch(initPage());
+  }, [])
+
+  useEffect( () => {
+    if (state.needLoadPageNums && state.needLoadPageNums.length > 0) {
+      LoadPages(state.needLoadPageNums, dispatch);
+    }
+  }, [state.needLoadPageNums])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppReducerContext.Provider value={reducer}>
+      <div className={styles.Control}>
+        <PageControl/>
+        <Search/>
+      </div>
+      
+      <div className={styles.Items}>
+        <ListView/>
+      </div>
+    </AppReducerContext.Provider>
   );
 }
 
