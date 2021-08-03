@@ -1,0 +1,10 @@
+.Control {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+}
+
+.Items {
+    height: 90vh;
+    display: flex;
+}

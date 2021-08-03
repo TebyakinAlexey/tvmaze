@@ -1,0 +1,20 @@
+.Img {
+    width: 100px;
+    height: 100px;
+}
+
+.TableContainer {
+    overflow-y: auto;
+    width: 100vw;
+}
+
+th {
+    top: 0px;
+    position: sticky;
+    background: lightgray;
+}
+
+table {
+    width: 90vw;
+}
+
